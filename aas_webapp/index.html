@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CoreAAS Web Application</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!-- Bootstrap (bootstrap, jquery, popper) -->
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <!-- AngularJs -->
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/angular-route/angular-route.min.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+        <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+        
+        <!-- UiBootstrap (v3) -->
+        <script src="rsc/libs/ui-bootstrap-tpls-3.0.6.min.js"></script>
+        
+        <!-- Angular toastr -->
+        <script src="node_modules/angular-toastr/dist/angular-toastr.tpls.js"></script>
+        <link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.css"/>
+
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+        
+        <!-- ImageMapster -->
+        <script src="rsc/libs/jquery.imagemapster.min.js"></script>
+        
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="rsc/img/favicon.ico">
+
+        <!-- main css -->
+        <link rel="stylesheet" href="main.css">
+        
+        <!-- controllers -->
+        <script src="controllers/mainCtrl.js"></script>
+        <script src="controllers/route.js"></script>
+
+        <script src="controllers/services/configurationService.js"></script>
+        <script src="controllers/services/elementService.js"></script>
+        <script src="controllers/services/mainService.js"></script>
+        <script src="controllers/services/modalService.js"></script>
+        <script src="controllers/services/restService.js"></script>
+
+        <script src="controllers/configuration/configCreationCtrl.js"></script>
+        <script src="controllers/configuration/configListCtrl.js"></script>
+        <script src="controllers/configuration/configCtrl.js"></script>
+
+        <script src="controllers/wiki/elementCtrl.js"></script>
+        <script src="controllers/wiki/elementListCtrl.js"></script>
+        <script src="controllers/wiki/rscCtrl.js"></script>
+
+        <!-- configurations -->
+        <script src="config.js"></script>
+
+    </head>
+    <body>
+        <div ng-app="myApp" ng-controller="mainCtrl"> 
+            <div class="row m-0"> 
+                
+                <!-- HEADER -->
+                <div class="col-md-12 " style="z-index:1">
+                    <div class="row main-header">
+                        <div class="col-md-3 h-100 p-0 p-0 d-flex align-items-center cursor-pointer" style="overflow: hidden" ng-click="redirectTo({id: baseUrl + 'index'})" data-toggle="tooltip" data-placement="bottom" title="Go to the main page"> 
+                            <img style="height: 175px;" src="rsc/img/logo.png">
+                            <div class="mb-0 ml-2 text-light webapp-title">CoreAAS Web Application</div>
+                        </div>
+                        <div class="col-md-9 h-100 p-0 d-flex align-items-center justify-content-end"> 
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- MENU -->
+                <div class="col-md-3 p-0 h-100" > 
+                    
+                    <div class="card p-0 menu-card-body">
+                        <div class="card-body">
+
+                            <!-- Home Item -->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 4px 4px 0px 0px !important;" 
+                                    ng-click="redirectTo({id: baseUrl + 'index'})" data-toggle="tooltip" data-placement="top" title="Open homepage">
+                                    <b>Homepage</b>
+                                </div>
+                            </div>
+
+                            <!-- Resources Item -->
+                            <div class="card p-0 border-0 mb-3">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 0px 0px 4px 4px !important;" 
+                                    ng-click="redirectTo({id: baseUrl + 'resources'})" data-toggle="tooltip" data-placement="top" title="Open resources">
+                                    <b>Resources</b>
+                                </div>
+                            </div>
+                            
+                            <!-- Configuration Item -->
+                            <div class="card p-0 border-0 mb-3">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 4px 4px 4px 4px !important" ng-click="setShow('bShow6')">
+                                    <b>Configurations</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'configurations'})" data-toggle="tooltip" data-placement="top" title="Open configurations">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right"></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow6">
+                                    <li ng-show="!configurationList.length" class="list-group-item">Nessuna configurazione presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in configurationList track by $index" ng-click="redirectTo(elem)" style="border-radius: 0px !important">
+                                        <div>{{elem.name}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Concept Descriptions Item-->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 4px 4px 0px 0px !important;" ng-click="setShow('bShow1')">
+                                    <b>Concept Descriptions</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'descriptions'})" data-toggle="tooltip" data-placement="top" title="Open descriptions">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right" ></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow1">
+                                    <li ng-show="!elements.descriptions.length" class="list-group-item">Nessuna concept description presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in elements.descriptions | orderBy: elem.browseName track by $index" ng-click="redirectTo(elem)" style="border-radius: 0px !important">
+                                        
+                                        <div>{{elem.browseName}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Submodels Item-->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 0px !important;" ng-click="setShow('bShow2')">
+                                    <b>Submodels</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'submodels'})" data-toggle="tooltip" data-placement="top" title="Open submodels">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right" ></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow2">
+                                    <li ng-show="!elements.submodels.length" class="list-group-item">Nessun submodel presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in elements.submodels | orderBy: elem.browseName track by $index" ng-click="redirectTo(elem)" style="border-radius: 0px !important">
+                                        <div>{{elem.browseName}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Assets Item-->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 0px !important;" ng-click="setShow('bShow3')" >
+                                    <b>Assets</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'assets'})" data-toggle="tooltip" data-placement="top" title="Open assets">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right" ></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow3">
+                                    <li ng-show="!elements.assets.length" class="list-group-item">Nessun asset presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in elements.assets | orderBy: elem.browseName track by $index" ng-click="redirectTo(elem)" style="border-radius: 0px !important">
+                                        <div>{{elem.browseName}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- AAS Item-->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 0px 0px 0px 0px !important;" ng-click="setShow('bShow4')" >
+                                    <b>Asset Administration Shells</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'aas'})" data-toggle="tooltip" data-placement="top" title="Open AAS">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right" ></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow4">
+                                    <li ng-show="!elements.aas.length" class="list-group-item">Nessun AAS presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in elements.aas | orderBy: elem.browseName track by $index" ng-click="redirectTo(elem)">
+                                        <div>{{elem.browseName}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Data Specifications Item-->
+                            <div class="card p-0 border-0">
+                                <div class="card-header p-2 m-0 text-left text-white cursor-pointer menu-item-header" style="border-radius: 0px 0px 4px 4px !important;" ng-click="setShow('bShow5')" >
+                                    <b>Data Specifications</b>
+                                </div>
+                                <div class="menu-list-button" ng-click="redirectTo({id: baseUrl + 'dataspecs'})" data-toggle="tooltip" data-placement="top" title="Open Data Specifications">
+                                    <button class="btn btn-sm btn-info"><span class="fa fa-angle-right" ></span></button>
+                                </div>
+                                <ul class="card-body p-0 m-0 menu-item-body" ng-show="showList.bShow5">
+                                    <li ng-show="!elements.dataspecs.length" class="list-group-item">Nessuna data specification presente!</li>
+                                    <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" 
+                                        ng-repeat="elem in elements.dataspecs | orderBy: elem.browseName track by $index" ng-click="redirectTo(elem)">
+                                        <div>{{elem.browseName}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="col-md-9 p-0 h-100"> 
+                    <div style="text-align:center; padding: 20px;" class="h-100">
+                        <div class="row m-0 h-100">
+                            <div class="col-md-12 card p-0 border-radius-0 h-100">
+                                <div class="card-header d-flex align-items-center justify-content-between py-2">
+                                    <h4 class="m-0">{{(currentSection != undefined && currentSection != "") ? currentSection : "Home"}}</h4>
+                                </div>
+                                <div class="card-body content-card-body w-100">
+                                    <div ng-view class="h-100 w-100"></div>
+                                </div>
+                                <div class="card-footer">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

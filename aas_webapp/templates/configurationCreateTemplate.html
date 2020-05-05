@@ -1,0 +1,131 @@
+<div class="card m-0 h-100" ng-show="!bLoading">
+    <!-- Header -->
+    <div class="card-header text-left">
+        <div class="btn btn-primary" ng-class="{'active': steps == STEP_ENUM.STEP1, 'disabled': steps != STEP_ENUM.STEP1}"><span class="badge badge-info">1</span> Selezione isole</div>
+        <div class="btn btn-primary" ng-class="{'active': steps == STEP_ENUM.STEP2, 'disabled': steps != STEP_ENUM.STEP2}"><span class="badge badge-info">2</span> Selezione processi</div>
+        <div class="btn btn-primary" ng-class="{'active': steps == STEP_ENUM.STEP3, 'disabled': steps != STEP_ENUM.STEP3}"><span class="badge badge-info">3</span> Dettagli configurazione </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body h-100 overflow-auto">
+        <!-- Init -->
+        <div class="h-100" ng-show="steps == STEP_ENUM.INIT">
+            <div class="text-left">
+                <h6>Configura la fabbrica Fischertechnik a tuo piacimento tramite la wizard guidata</h6>
+                <span>La wizard ti consentirà di personalizzare il tuo processo produttivo sulla base degli elementi disponibili. <br>
+                        • Nel primo passo potrai scegliere le sottoisole da considerare durante il processo produttivo. <br>
+                        • Nel secondo passo potrai configurare quali elementi di ogni sottoisola tenere attivi durante il processo produttivo <br>
+                        • Nel terzo passo potrai inserire un nome, descrizione e dettagli relativi alla configurazione <br>
+                        Al termine della wizard potrai salvare la tua configurazione personalizzata e scegliere se caricarla nella fabbrica Fischertechnik! <br>
+                </span>
+            </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="h-100 row" ng-show="steps == STEP_ENUM.STEP1">
+            <div class="col-4 text-left">
+                <h5>Step 1 - Selezione isole di produzione</h5>
+                <span>Clicca sulle isole desiderate per inserirle nella configurazione. Clicca nuovamente per rimuoverle.</span><br><br>
+                <span>Isole selezionate:</span><br>
+                <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.multiProcessingStation, 'fa fa-check-circle text-success': configInformations.islands.multiProcessingStation}"></span> Multi Processing Station <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.sortingLine, 'fa fa-check-circle text-success': configInformations.islands.sortingLine}"></span> Sorting Line <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.vacuumGripper, 'fa fa-check-circle text-success': configInformations.islands.vacuumGripper}"></span> Vacuum Gripper <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.automatedHighBayWarehouse, 'fa fa-check-circle text-success': configInformations.islands.automatedHighBayWarehouse}"></span> Automated High Bay Warehouse <br>
+            </div>
+            <div class="col-8">
+                <img id="factoryImageMap" src="rsc/img/factory2.png" alt="Fabbrica" usemap="#workmap" style="max-width:100%; height:auto">
+                <map name="workmap">
+                    <area shape="poly" href="#" island="MPS" coords="427,407, 267,350, 272,338, 330,280, 308,272, 376,218, 377,205, 386,210, 443,166, 500,181, 500,188, 502,188, 502,255, 555,271" alt="Multi Processing Station" ng-click="selectIsland(ISLAND_ENUM.MPS)">
+                    <area shape="poly" href="#" island="SL" coords="30,295, 43,285, 42,265, 56,250, 56,245, 75,234, 75,225, 82,220, 106,225, 110,215, 192,242, 196,240, 255,260, 260,256, 320,277, 325,285, 227,370" alt="Sorting Line" ng-click="selectIsland(ISLAND_ENUM.SL)">
+                    <area shape="poly" href="#" island="VG" coords="200,235, 200,215, 212,207, 230,213, 234,209, 234,192, 230,186, 230,127, 194,136, 185,128, 130,142, 132,173, 136,177, 136,184, 127,187, 120,185, 120,177, 123,172, 120,166, 118,137, 106,126, 110,121, 115,118, 117,110, 121,110, 123,117, 130,120, 143,116, 147,124, 183,114, 183,101, 193,99, 200,103, 227,96, 227,86, 221,84, 221,58, 262,50, 277,63, 281,63, 287,67, 287,73, 294,80, 300,80, 301,68, 310,67, 312,77, 330,87, 333,126, 321,136, 285,128, 285,168, 298,182, 300,188, 306,189, 310,184, 318,191, 332,190, 340,195, 340,210, 350,210, 375,215, 310,268" alt="Vacuum Gripper" ng-click="selectIsland(ISLAND_ENUM.VG)">
+                    <area shape="poly" href="#" island="AHBW" coords="613,177, 575,166, 575,161, 570,160, 570,150, 540,141, 528,144, 520,150, 517,147, 516,132, 514,130, 516,96, 536,78, 541,71, 551,52, 552,41, 541,38, 541,28, 545,25, 545,14, 550,11, 549,8, 533,5, 527,9, 528,37, 517,47, 517,41, 521,36, 521,20, 500,16, 500,12, 494,11, 493,15, 483,14, 472,15, 468,18, 464,26, 466,31, 471,32, 466,37, 459,37, 458,53, 466,57, 467,62, 376,42, 367,48, 367,84, 361,86, 322,76, 318,78, 332,87, 336,129, 322,138, 293,132, 285,140, 285,166, 400,198, 443,164, 503,181, 505,227, 552,241" alt="Warehouse" ng-click="selectIsland(ISLAND_ENUM.AHBW)">
+                </map>
+            </div>
+            
+        </div>
+
+        <!-- Step 2 -->
+        <div class="h-100" ng-show="steps == STEP_ENUM.STEP2">
+            <div ng-repeat="(key, island) in configInformations.islands track by $index" ng-show="island">
+                <table class="table table-bordered mb-4" style="table-layout: fixed;">
+                    <caption class="text-primary text-capitalize font-weight-bold" style="caption-side: top;">{{key}}</caption>
+                    <thead ng-init="bShow=true" ng-click="bShow=!bShow" class="cursor-pointer">
+                        <tr class="row m-0" style="background-color:#cce7ff;">
+                            <th scope="col" class="col-5 text-left border-0">PLC Terminal</th>
+                            <th scope="col" class="col-5 text-left border-0">Island Terminal</th>
+                            <th scope="col" class="col-2 d-flex text-left border-0">Value
+                                <div class="custom-control custom-checkbox ml-2">
+                                    <input type="checkbox" class="custom-control-input" id="terminal-checkbox-all-{{$index}}" ng-click="switchAllTerminals(key, $index)" ng-model="terminalSwitch[key]">
+                                    <label class="custom-control-label cursor-pointer" for="terminal-checkbox-all-{{$index}}" data-toggle="tooltip" data-placement="top" title="Switch all terminals"></label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="bShow">
+                        <tr ng-repeat="elem in configInformations.mapping[key] track by $index" class="row m-0">
+                            <td class="col-5 text-left">{{elem.plcTerminalId}}</td>
+                            <td class="col-5 text-left">{{elem.islandTerminalId}}</td>
+                            <td class="col-2 text-left">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="terminal-checkbox-{{key}}{{$index}}" ng-model="elem.value" ng-change="checkActiveTerminals(key)">
+                                    <label class="custom-control-label cursor-pointer" for="terminal-checkbox-{{key}}{{$index}}">{{elem.value ? "ON" : "OFF"}}</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="h-100" ng-show="steps == STEP_ENUM.STEP3">
+            <form>
+                <div class="form-group row m-0 mb-2 text-left">
+                    <label class="col-2" for="config-name">Name:</label>
+                    <input class="col-10 form-control" type="text" id="config-name" name="config-name" ng-model="configInformations.name" ng-required>
+                </div>
+                <div class="form-group row m-0 mb-2 text-left">
+                    <label class="col-2" for="config-description">Description:</label>
+                    <input class="col-10 form-control" type="text" id="config-description" name="config-description" ng-model="configInformations.description">
+                </div>
+                <div class="form-group row m-0 mb-2 text-left">
+                    <label class="col-2" for="config-identifier">Identifier:</label>
+                    <input class="col-10 form-control" type="text" id="config-identifier" name="config-identifier" ng-model="configInformations.id" ng-disabled="true">
+                </div>
+                <div class="form-group row m-0 mb-2 text-left">
+                    <label class="col-2">Active islands:</label>
+                    <div class="col-10 pl-0"> 
+                        <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.multiProcessingStation, 'fa fa-check-circle text-success': configInformations.islands.multiProcessingStation}"></span> Multi Processing Station <br>
+                        <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.sortingLine, 'fa fa-check-circle text-success': configInformations.islands.sortingLine}"></span> Sorting Line <br>
+                        <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.vacuumGripper, 'fa fa-check-circle text-success': configInformations.islands.vacuumGripper}"></span> Vacuum Gripper <br>
+                        <span ng-class="{'fa fa-times-circle text-danger': !configInformations.islands.automatedHighBayWarehouse, 'fa fa-check-circle text-success': configInformations.islands.automatedHighBayWarehouse}"></span> Automated High Bay Warehouse <br>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- Footer -->
+    <div class="card-footer text-right">
+        <button class="btn btn-info" ng-show="steps == STEP_ENUM.INIT" ng-click="nextStep()">Start</button>
+        <button class="btn btn-secondary" ng-show="steps != STEP_ENUM.INIT" ng-disabled="steps == STEP_ENUM.STEP1" ng-click="previousStep()">Back</button>
+        <button class="btn btn-primary" ng-show="steps != STEP_ENUM.INIT && steps != STEP_ENUM.STEP3" 
+            ng-disabled="(!configInformations.islands.multiProcessingStation && !configInformations.islands.sortingLine && !configInformations.islands.vacuumGripper && !configInformations.islands.automatedHighBayWarehouse) 
+                          || (steps == STEP_ENUM.STEP2 && !areActiveIsland())" 
+            ng-click="nextStep()">Next</button>
+        <button class="btn btn-primary" ng-show="steps == STEP_ENUM.STEP3" ng-click="submitConfig()">Submit</button>
+    </div>
+</div>
+
+<div class='h-100 w-100' ng-show="bLoading">
+    <div style="position:absolute; background-color:black; opacity:50%; right:0; top:0;" class="w-100 h-100"></div>
+    <div class="container d-flex align-items-center justify-content-center w-100 h-100">
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer d-flex align-items-center justify-content-center'></i>
+    </div>
+</div>

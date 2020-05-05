@@ -1,0 +1,13 @@
+<div class="h-100 row m-0">
+    <div class="col-3 h-100">
+        <ul class="card-body p-0 m-0 h-100">
+            <li class="d-flex align-items-center justify-content-between list-group-item list-group-item-action py-2 cursor-pointer" style="border-radius: 0px !important"
+            ng-repeat="rsc in resourceList track by $index" ng-click="setShow($index)" ng-class="{'active': rsc.bShow}">
+                <div>{{rsc.name}}</div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-9 h-100 w-100">
+        <embed type="application/pdf" ng-repeat="rsc in resourceList track by $index" ng-class="{'display-none': !rsc.bShow, 'display-block': rsc.bShow}" ng-src="{{rsc.path}}" ng-alt="{{rsc.alt}}" class="w-100 h-100" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+    </div>
+</div>

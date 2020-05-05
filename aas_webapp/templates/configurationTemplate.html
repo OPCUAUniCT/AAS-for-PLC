@@ -1,0 +1,76 @@
+<div class="h-100" ng-show="!bLoading">
+    <div class="form-group row m-0 mb-2 text-left">
+        <label class="col-2" for="config-name">Name:</label>
+        <input class="col-10 form-control" type="text" id="config-name" name="config-name" ng-model="currentConfig.name" ng-disabled="!bEdit">
+    </div>
+    <div class="form-group row m-0 mb-2 text-left">
+        <label class="col-2" for="config-description">Description:</label>
+        <input class="col-10 form-control" type="text" id="config-description" name="config-description" ng-model="currentConfig.description" ng-disabled="!bEdit">
+    </div>
+    <div class="form-group row m-0 mb-2 text-left">
+        <label class="col-2" for="config-identifier">Identifier:</label>
+        <input class="col-10 form-control" type="text" id="config-identifier" name="config-identifier" ng-model="currentConfig.id" ng-disabled="true">
+    </div>
+    <div class="form-group row m-0 mb-2 text-left">
+        <label class="col-2">Active islands:</label>
+        <div class="col-10 pl-0"> 
+            <span class="font-awesome-checkbox cursor-pointer" ng-click="switchAllTerminals(ISLAND_ENUM.MPS)" ng-class="{'fa fa-times-circle text-danger': !currentConfig.islands.multiProcessingStation, 'fa fa-check-circle text-success': currentConfig.islands.multiProcessingStation}"></span> Multi Processing Station <br>
+            <span class="font-awesome-checkbox cursor-pointer" ng-click="switchAllTerminals(ISLAND_ENUM.SL)" ng-class="{'fa fa-times-circle text-danger': !currentConfig.islands.sortingLine, 'fa fa-check-circle text-success': currentConfig.islands.sortingLine}"></span> Sorting Line <br>
+            <span class="font-awesome-checkbox cursor-pointer" ng-click="switchAllTerminals(ISLAND_ENUM.VG)" ng-class="{'fa fa-times-circle text-danger': !currentConfig.islands.vacuumGripper, 'fa fa-check-circle text-success': currentConfig.islands.vacuumGripper}"></span> Vacuum Gripper <br>
+            <span class="font-awesome-checkbox cursor-pointer" ng-click="switchAllTerminals(ISLAND_ENUM.AHBW)" ng-class="{'fa fa-times-circle text-danger': !currentConfig.islands.automatedHighBayWarehouse, 'fa fa-check-circle text-success': currentConfig.islands.automatedHighBayWarehouse}"></span> Automated High Bay Warehouse <br>
+        </div>
+    </div>
+    <div class="form-group row m-0 mb-2 text-left">
+        <label class="col-2" for="config-mapping">Mapping:</label>
+        <div class="col-10 pl-0" id="config-mapping" name="config-mapping">
+            <div ng-repeat="(key, value) in currentConfig.mapping track by $index">
+                <table class="table table-bordered mb-4" style="table-layout: fixed;">
+                    <caption class="text-capitalize" style="caption-side: top;">{{key}}</caption>
+                    <thead ng-init="bShow=true" ng-click="bShow=!bShow" class="cursor-pointer">
+                        <tr class="row m-0" style="background-color:#cce7ff;">
+                            <th scope="col" class="col-5 text-left border-0">PLC Terminal Id</th>
+                            <th scope="col" class="col-5 text-left border-0">Island Terminal Id</th>
+                            <th scope="col" class="col-2 d-flex text-left border-0">Value
+                                <div class="custom-control custom-checkbox ml-2">
+                                    <input type="checkbox" class="custom-control-input" id="terminal-checkbox-all-{{$index}}" ng-change="switchAllTerminals(key, 'checkbox')" ng-model="currentConfig.islands[key]" ng-disabled="!bEdit">
+                                    <label class="custom-control-label cursor-pointer" for="terminal-checkbox-all-{{$index}}" data-toggle="tooltip" data-placement="top" title="Switch all terminals"></label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="bShow">
+                        <tr ng-repeat="elem in value track by $index" class="row m-0">
+                            <td class="col-5 text-left">{{elem.plcTerminalId}}</td>
+                            <td class="col-5 text-left">{{elem.islandTerminalId}}</td>
+                            <td class="col-2 text-left">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="terminal-checkbox-{{key}}{{$index}}" ng-model="elem.value" ng-change="checkActiveTerminals(key)" ng-disabled="!bEdit">
+                                    <label class="custom-control-label cursor-pointer" for="terminal-checkbox-{{key}}{{$index}}">{{elem.value ? "ON" : "OFF"}}</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex config-menu-buttons">
+    <button class="btn btn-primary mr-1" ng-show="!bEdit" ng-click="edit()"><span class="fa fa-edit mr-1"></span>Edit</button>
+    <button class="btn btn-primary mr-0 config-menu-buttons-save" ng-show="bEdit" ng-click="save()"><span class="fa fa-save mr-1"></span>Save</button>
+    <button class="btn btn-secondary mr-1 config-menu-buttons-cancel" ng-show="bEdit" ng-click="cancel()"><span class="fa fa-times mr-1"></span>Cancel</button>
+    <button class="btn btn-danger mr-1" ng-click=delete()><span class="fa fa-trash-alt mr-1"></span>Delete</button>
+    <button class="btn btn-dark" ng-click="uploadPlcProgram(currentConfig.id)"><span class="fa fa-cogs mr-1"></span>Upload</button>
+</div>
+
+<div class='h-100 w-100' ng-show="bLoading">
+    <div style="position:absolute; background-color:black; opacity:50%; right:0; top:0;" class="w-100 h-100"></div>
+    <div class="container d-flex align-items-center justify-content-center w-100 h-100">
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer d-flex align-items-center justify-content-center'></i>
+    </div>
+</div>

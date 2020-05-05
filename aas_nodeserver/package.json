@@ -1,0 +1,34 @@
+{
+  "name": "aas_nodeserver",
+  "version": "1.0.0",
+  "description": "Nodeserver for the coreaas application. Implements REST, backend and database access.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taletex/CoreAAS-based-application.git"
+  },
+  "keywords": [
+    "industry4.0",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Alessandro Messina, Marco Pisasale",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-server": "^0.9.0",
+    "line-reader": "^0.4.0",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.7.12"
+  },
+  "bugs": {
+    "url": "https://github.com/Taletex/CoreAAS-based-application/issues"
+  },
+  "homepage": "https://github.com/Taletex/CoreAAS-based-application#readme"
+}

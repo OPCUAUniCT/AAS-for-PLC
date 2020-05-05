@@ -1,0 +1,44 @@
+{
+  "name": "opcua-coreaas-based-application",
+  "version": "1.0.1",
+  "description": "An extension for opcua-coreaas implementing coreAAS Address Space",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "npx tsc & node dist/index.js",
+    "uaIndustryServer": "npx tsc & node dist/uaIndustryServer.js",
+    "doc": "npx typedoc --excludeExternals --excludeNotExported --excludePrivate src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "opcua",
+    "node",
+    "coreaas",
+    "aas",
+    "industry4.0"
+  ],
+  "authors": [
+    "Alessandro Messina",
+    "Marco Pisasale"
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taletex/CoreAAS-based-application"
+  },
+  "devDependencies": {
+    "typedoc": "^0.15.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "node-opcua": "^2.1.5",
+    "node-opcua-coreaas": "^1.0.1"
+  },
+  "bugs": {
+    "url": "https://github.com/Taletex/CoreAAS-based-application/issues"
+  },
+  "homepage": "https://github.com/Taletex/CoreAAS-based-application#readme",
+  "directories": {
+    "doc": "docs"
+  }
+}

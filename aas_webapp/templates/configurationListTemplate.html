@@ -1,0 +1,46 @@
+<table class="table" style="table-layout: fixed;" ng-show="configurationList.length > 0 && !bLoading">
+    <thead>
+        <tr class="row m-0">
+            <th scope="col" class="col-1 text-left"></th>
+            <th scope="col" class="col-2 text-left">Name</th>
+            <th scope="col" class="col-3 text-left">Islands</th>
+            <th scope="col" class="col-3 text-left">Description</th>
+            <th scope="col" class="col-2 text-left">Identifier</th>
+            <th scope="col" class="col-1 text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="elem in configurationList track by $index" class="cursor-pointer configRow row m-0">
+            <th class="col-1 text-left" ng-click="windowsHRef(elem)">{{$index + 1}}</th>
+            <td class="col-2 text-left" ng-click="windowsHRef(elem)">{{elem.name}}</td>
+            <td class="col-3 text-left" ng-click="windowsHRef(elem)">
+                <span ng-class="{'fa fa-times-circle text-danger': !elem.islands.multiProcessingStation, 'fa fa-check-circle text-success': elem.islands.multiProcessingStation}"></span> Multi Processing Station <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !elem.islands.sortingLine, 'fa fa-check-circle text-success': elem.islands.sortingLine}"></span> Sorting Line <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !elem.islands.vacuumGripper, 'fa fa-check-circle text-success': elem.islands.vacuumGripper}"></span> Vacuum Gripper <br>
+                <span ng-class="{'fa fa-times-circle text-danger': !elem.islands.automatedHighBayWarehouse, 'fa fa-check-circle text-success': elem.islands.automatedHighBayWarehouse}"></span> Automated High Bay Warehouse <br>
+            </td>
+            <td class="col-3 text-left" ng-click="windowsHRef(elem)">{{elem.description}}</td>
+            <td class="col-2 text-left" ng-click="windowsHRef(elem)">{{elem.id}}</td>
+            <td class="col-1 text-center">
+                <div class="fa fa-edit text-primary mr-2" ng-click="edit(elem)" data-toggle="tooltip" data-placement="top" title="Edit configuration"></div>
+                <div class="fa fa-trash-alt text-danger mr-2" ng-click="delete(elem)" data-toggle="tooltip" data-placement="top" title="Delete configuration"></div>
+                <div class="fa fa-cogs" ng-click="uploadPlcProgram(elem.id)" data-toggle="tooltip" data-placement="top" title="Upload configuration"></div>
+            </td>
+        </tr>
+        <button class="btn btn-success" style="position: absolute; bottom: 5px; right: 7px; width: 99%" ng-click="windowsHRef({id: baseUrl + 'configurations/create'})"><span class="fa fa-plus-circle mr-2"></span>Nuova configurazione</button>
+    </tbody>
+</table>
+
+<div class="list-group-item" ng-show="configurationList.length == 0 && !bLoading">Nessuna configurazione presente!</div>
+
+<div class='h-100 w-100' ng-show="bLoading">
+    <div style="position:absolute; background-color:black; opacity:50%; right:0; top:0;" class="w-100 h-100"></div>
+    <div class="container d-flex align-items-center justify-content-center w-100 h-100">
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer'></i>
+        <i class='layer d-flex align-items-center justify-content-center'></i>
+    </div>
+</div>

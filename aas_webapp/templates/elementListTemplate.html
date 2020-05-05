@@ -1,0 +1,22 @@
+<table class="table" style="table-layout: fixed;">
+    <thead>
+        <tr>
+            <th scope="col" class="text-left"></th>
+            <th scope="col" class="text-left">Browse name</th>
+            <th scope="col" class="text-left" ng-show="currentSection == 'descriptions'">Preferred name</th>
+            <th scope="col" class="text-left">Description</th>
+            <th scope="col" class="text-left" ng-show="currentSection == 'descriptions'">Unit</th>
+            <th scope="col" class="text-left">Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="elem in currentList | orderBy: elem.browseName track by $index">
+            <th class="text-left">{{$index + 1}}</th>
+            <td class="text-left">{{elem.browseName}}</td>
+            <td class="text-left" ng-show="currentSection == 'descriptions'">{{elem.preferredName}}</td>
+            <td class="text-left">{{elem.description}}</td>
+            <td class="text-left" ng-show="currentSection == 'descriptions'">{{(elem.unit != undefined && elem.unit != "") ? elem.unit : "n.d."}}</td>
+            <td class="text-left"><a href="{{elem.id}}">{{elem.id}}</a></td>
+        </tr>
+    </tbody>
+</table>

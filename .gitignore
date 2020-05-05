@@ -1,0 +1,6 @@
+aas_opcuaserver/node_modules
+aas_nodeserver/node_modules
+aas_nodeserver/rsc/openplc/plc.st
+aas_nodeserver/rsc/openplc/plc.xml
+aas_webapp/node_modules
+/.vscode
